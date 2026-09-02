@@ -6,7 +6,7 @@ author: pod
 tags:
   - intro
 publish: true
-heroImage: '/blog-placeholder-1.png'
+heroImage: '../../assets/blog-placeholder-1.jpg'
 ---
 
 ## This is a test post

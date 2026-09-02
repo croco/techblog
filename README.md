@@ -72,9 +72,9 @@ npm run preview # ビルド結果をローカルでプレビュー
 
 ## デプロイ
 
-`main` ブランチに push すると `.github/workflows/deploy.yml` が動き、ビルド済みの静的ファイルを `gh-pages` ブランチにデプロイする。GitHub Pages の設定で `gh-pages` ブランチをソースにすればサイト공개される。
+`main` ブランチに push すると `.github/workflows/deploy.yml` が動き、ビルド結果（`dist/`）を GitHub Pages へ直接アップロードして公開する。`gh-pages` ブランチは使わない方式なので、リポジトリの Settings → Pages → Build and deployment で **Source を「GitHub Actions」** にしておく必要がある。
 
-独自ドメインを付ける場合は GitHub リポジトリの Settings → Pages → Custom domain でドメインを設定し、DNS に CNAME/ALIAS を張る。
+独自ドメインは `techblog.cro-co.co.jp`。Settings → Pages の Custom domain 設定はデプロイのたびに外れることがあるため、`public/CNAME` にドメインを置いて毎回の配信物に含めている。ドメインを変えるときはこのファイルも更新すること。DNS 側には CNAME/ALIAS を張る。
 
 ## このブログの使い方（croco 流）
 
