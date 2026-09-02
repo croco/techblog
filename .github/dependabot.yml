@@ -1,0 +1,32 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # astro 本体と @astrojs/* は peer 依存で連動する
+      # （例: @astrojs/mdx@8 の peer は astro ^7.2.6）。
+      # 個別 PR に分かれると片方だけ上がって peer 不整合で落ちるため 1 つにまとめる
+      astro:
+        patterns:
+          - astro
+          - "@astrojs/*"
+    commit-message:
+      prefix: chore
+      include: scope
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      # workflow が使うアクションはまとめて上げる
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: ci
+      include: scope
