@@ -1,5 +1,3 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-export const SITE_TITLE = 'Astro Blog';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+// サイト全体で使う定数。BaseHead や RSS から参照する。
+export const SITE_TITLE = 'croco techblog';
+export const SITE_DESCRIPTION = 'croco の技術ブログ。各リポジトリのコードやアイデアを記事化して公開しています。';

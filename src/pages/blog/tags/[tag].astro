@@ -1,29 +1,27 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import BaseHead from '../../../components/BaseHead.astro';
+import Footer from '../../../components/Footer.astro';
+import Header from '../../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../../consts';
 import { Image } from 'astro:assets';
-import FormattedDate from '../../components/FormattedDate.astro';
+import FormattedDate from '../../../components/FormattedDate.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection('blog', ({ data }) => data.publish);
 	const tagSet = new Set<string>();
-	posts
-		.filter((post) => post.data.publish)
-		.forEach((post) => post.data.tags.forEach((tag) => tagSet.add(tag)));
+	posts.forEach((post) => post.data.tags.forEach((tag) => tagSet.add(tag)));
 	return [...tagSet].map((tag) => ({ params: { tag }, props: { tag } }));
 }
 
 const { tag } = Astro.params;
-const posts = (await getCollection('blog'))
-	.filter((post) => post.data.publish && post.data.tags.includes(tag))
+const posts = (await getCollection('blog', ({ data }) => data.publish))
+	.filter((post) => post.data.tags.includes(tag))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 	<head>
 		<BaseHead title={`Tag: ${tag} — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 		<style>

@@ -6,12 +6,16 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+// about ページなどブログコレクション以外からも使うため、author / tags は任意扱いにする
+type Props = Omit<CollectionEntry<'blog'>['data'], 'author' | 'tags'> & {
+	author?: string;
+	tags?: string[];
+};
 
-const { title, description, pubDate, updatedDate, heroImage, author, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, author, tags = [] } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="ja">
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
@@ -102,9 +106,11 @@ const { title, description, pubDate, updatedDate, heroImage, author, tags } = As
 							}
 						</div>
 						<h1>{title}</h1>
-						<p class="meta">
-							<span class="author">{author}</span>
-						</p>
+						{author && (
+							<p class="meta">
+								<span class="author">{author}</span>
+							</p>
+						)}
 						{tags.length > 0 && (
 							<div class="tags">
 								{tags.map((tag) => (
