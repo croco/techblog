@@ -1,0 +1,46 @@
+---
+import { slugify } from '../utils/posts';
+
+interface Props {
+	tag: string;
+	active?: boolean;
+}
+
+const { tag, active = false } = Astro.props;
+---
+
+<a href={`/tags/${slugify(tag)}/`} class:list={['chip', { active }]}>
+	<span class="hash">#</span>{tag}
+</a>
+
+<style>
+	.chip {
+		display: inline-block;
+		padding: 2px 9px;
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		font-family: var(--font-mono);
+		font-size: 13px;
+		line-height: 1.6;
+		color: var(--dim);
+		text-decoration: none;
+		transition:
+			border-color 0.18s ease,
+			color 0.18s ease;
+	}
+	.chip:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+	.chip.active {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+	.hash {
+		color: var(--faint);
+	}
+	.chip.active .hash,
+	.chip:hover .hash {
+		color: inherit;
+	}
+</style>

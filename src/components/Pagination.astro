@@ -1,0 +1,114 @@
+---
+import { pageCount } from '../utils/posts';
+
+interface Props {
+	/** 現在のページ番号（1 始まり） */
+	current: number;
+	/** 総件数 */
+	total: number;
+	/** 末尾にスラッシュを含むベースパス。例: /articles/ */
+	base: string;
+}
+
+const { current, total, base } = Astro.props;
+const pages = pageCount(total);
+// 1 ページ目はベース URL 側が持つので、page/1 は正規 URL ではない。
+// リンク先としては存在するため、ここでは素直に page/N を指す。
+const href = (n: number) => `${base}page/${n}/`;
+---
+
+{
+	pages > 1 && (
+		<nav class="pager" aria-label="ページ送り">
+			{current > 1 ? (
+				<a href={href(current - 1)} class="step" rel="prev">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M14 6l-6 6 6 6" />
+					</svg>
+					前へ
+				</a>
+			) : (
+				<span class="step disabled">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M14 6l-6 6 6 6" />
+					</svg>
+					前へ
+				</span>
+			)}
+			{Array.from({ length: pages }, (_, i) => i + 1).map((n) =>
+				n === current ? (
+					<span class="num on" aria-current="page">
+						{n}
+					</span>
+				) : (
+					<a href={href(n)} class="num">
+						{n}
+					</a>
+				),
+			)}
+			{current < pages ? (
+				<a href={href(current + 1)} class="step" rel="next">
+					次へ
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M10 6l6 6-6 6" />
+					</svg>
+				</a>
+			) : (
+				<span class="step disabled">
+					次へ
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<path d="M10 6l6 6-6 6" />
+					</svg>
+				</span>
+			)}
+		</nav>
+	)
+}
+
+<style>
+	.pager {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin-top: 72px;
+	}
+	.num,
+	.step {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 46px;
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		font-family: var(--font-mono);
+		font-size: 15px;
+		color: var(--dim);
+		text-decoration: none;
+		transition:
+			border-color 0.18s ease,
+			color 0.18s ease;
+	}
+	.num {
+		min-width: 46px;
+		padding: 0 12px;
+	}
+	.step {
+		gap: 7px;
+		padding: 0 16px;
+	}
+	a.num:hover,
+	a.step:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+	.num.on {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+	.disabled {
+		opacity: 0.4;
+		color: var(--faint);
+	}
+</style>

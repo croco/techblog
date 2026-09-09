@@ -1,0 +1,39 @@
+---
+import Listing from '../../../components/Listing.astro';
+import Base from '../../../layouts/Base.astro';
+import { SITE_TITLE } from '../../../consts';
+import { getTags, pageSlice } from '../../../utils/posts';
+
+export async function getStaticPaths() {
+	const tags = await getTags();
+	return tags.map((tag) => ({ params: { tag: tag.slug }, props: { name: tag.name } }));
+}
+
+const { name } = Astro.props;
+const { tag } = Astro.params;
+const posts = (await getTags()).find((t) => t.slug === tag)!.posts;
+const shown = pageSlice(posts, 1);
+---
+
+<Base
+	title={`#${name} — ${SITE_TITLE}`}
+	description={`${name} タグの記事一覧。`}
+	activeTag={tag}
+>
+	<Listing
+		eyebrow={`/tags/${tag}/`}
+		meta={`${posts.length} 件`}
+		posts={shown}
+		total={posts.length}
+		current={1}
+		base={`/tags/${tag}/`}
+	>
+		<h1 slot="heading"><span class="hash">#</span>{name}</h1>
+	</Listing>
+</Base>
+
+<style>
+	.hash {
+		color: var(--accent);
+	}
+</style>

@@ -1,0 +1,40 @@
+---
+import Listing from '../../../components/Listing.astro';
+import Base from '../../../layouts/Base.astro';
+import { PER_PAGE, SITE_DESCRIPTION, SITE_TITLE } from '../../../consts';
+import { getPosts, pageCount, pageSlice } from '../../../utils/posts';
+
+export async function getStaticPaths() {
+	const posts = await getPosts();
+	return Array.from({ length: pageCount(posts.length) }, (_, i) => i + 1).map((page) => ({
+		params: { page: String(page) },
+		props: { page },
+	}));
+}
+
+const { page } = Astro.props;
+const posts = await getPosts();
+const shown = pageSlice(posts, page);
+const from = (page - 1) * PER_PAGE + 1;
+const to = from + shown.length - 1;
+// 1 ページ目は /articles/ が正
+const canonical = page === 1 ? '/articles/' : undefined;
+---
+
+<Base
+	title={`記事一覧 (${page}ページ目) — ${SITE_TITLE}`}
+	description={SITE_DESCRIPTION}
+	canonical={canonical}
+	current="articles"
+>
+	<Listing
+		eyebrow={`/articles/page/${page}/`}
+		meta={`全 ${posts.length} 件 · ${from}–${to} 件目を表示`}
+		posts={shown}
+		total={posts.length}
+		current={page}
+		base="/articles/"
+	>
+		<h1 slot="heading">記事一覧</h1>
+	</Listing>
+</Base>

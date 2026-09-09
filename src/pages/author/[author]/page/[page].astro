@@ -1,0 +1,42 @@
+---
+import AuthorHeading from '../../../../components/AuthorHeading.astro';
+import Listing from '../../../../components/Listing.astro';
+import Base from '../../../../layouts/Base.astro';
+import { PER_PAGE, SITE_TITLE } from '../../../../consts';
+import { getAuthors, pageCount, pageSlice } from '../../../../utils/posts';
+
+export async function getStaticPaths() {
+	const authors = await getAuthors();
+	return authors.flatMap((a) =>
+		Array.from({ length: pageCount(a.posts.length) }, (_, i) => i + 1).map((page) => ({
+			params: { author: a.slug, page: String(page) },
+			props: { page, name: a.name },
+		})),
+	);
+}
+
+const { page, name } = Astro.props;
+const { author } = Astro.params;
+const posts = (await getAuthors()).find((a) => a.slug === author)!.posts;
+const shown = pageSlice(posts, page);
+const from = (page - 1) * PER_PAGE + 1;
+const to = from + shown.length - 1;
+const canonical = page === 1 ? `/author/${author}/` : undefined;
+---
+
+<Base
+	title={`${name} の記事 (${page}ページ目) — ${SITE_TITLE}`}
+	description={`${name} が書いた記事の一覧。`}
+	canonical={canonical}
+>
+	<Listing
+		eyebrow={`/author/${author}/page/${page}/`}
+		meta={`${posts.length} 件 · ${from}–${to} 件目を表示`}
+		posts={shown}
+		total={posts.length}
+		current={page}
+		base={`/author/${author}/`}
+	>
+		<AuthorHeading slot="heading" name={name} />
+	</Listing>
+</Base>
