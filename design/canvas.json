@@ -1,0 +1,94 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 0,
+      "w": 1440,
+      "h": 2320,
+      "title": "トップ /"
+    },
+    {
+      "file": "Light.dc.html",
+      "x": 1560,
+      "y": 0,
+      "w": 1440,
+      "h": 2320,
+      "title": "トップ / — ライト"
+    },
+    {
+      "file": "Articles.dc.html",
+      "x": 0,
+      "y": 2460,
+      "w": 1440,
+      "h": 2600,
+      "title": "記事一覧 /articles/page/2/"
+    },
+    {
+      "file": "Post.dc.html",
+      "x": 1560,
+      "y": 2460,
+      "w": 1440,
+      "h": 2400,
+      "title": "記事 /[slug]/"
+    },
+    {
+      "file": "Tag.dc.html",
+      "x": 0,
+      "y": 5200,
+      "w": 1440,
+      "h": 1560,
+      "title": "タグ /tags/[tag]/"
+    },
+    {
+      "file": "Author.dc.html",
+      "x": 1560,
+      "y": 5200,
+      "w": 1440,
+      "h": 1560,
+      "title": "著者 /author/[author]/"
+    },
+    {
+      "file": "About.dc.html",
+      "x": 0,
+      "y": 6900,
+      "w": 1440,
+      "h": 1400,
+      "title": "固定ページ /about/"
+    },
+    {
+      "file": "Mobile.dc.html",
+      "x": 1560,
+      "y": 6900,
+      "w": 390,
+      "h": 2060,
+      "title": "トップ / — モバイル"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "routing",
+      "x": 0,
+      "y": -260,
+      "w": 620,
+      "text": "ルーティング\n/            トップ（3列 × 4行 = 12件、最新順）\n/[slug]/     記事\n/articles/   一覧（3列 × 5行 = 15件/ページ）\n/articles/page/2/\n/tags/[tag]/ + /tags/[tag]/page/2/\n/author/[author]/ + /author/[author]/page/2/\n/about/      固定ページ"
+    },
+    {
+      "id": "listing-rule",
+      "x": 3120,
+      "y": 5200,
+      "w": 560,
+      "text": "タグ／著者ページも一覧と同じ規則（3列 × 最大5行 = 15件/ページ）。\n#php は全6件なのでページングを出していない。\n/author/pod/ は41件あるが、カンバスの高さを詰めるため先頭6件だけ描画している。"
+    },
+    {
+      "id": "theme",
+      "x": 1560,
+      "y": -260,
+      "w": 620,
+      "text": "ダークが既定（prefers-color-scheme: dark）。右がライト。\n文字サイズと行間は現行のまま — base 20px / 1.7、h1 3.052em、h2 2.441em。\n見出しと本文は Atkinson Hyperlegible（リポジトリに既にある）、\n日付・タグ・ナビなどのメタ情報だけ JetBrains Mono。"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}
