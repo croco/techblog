@@ -1,0 +1,22 @@
+---
+import Listing from '../../components/Listing.astro';
+import Base from '../../layouts/Base.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { getPosts, pageSlice } from '../../utils/posts';
+
+const posts = await getPosts();
+const shown = pageSlice(posts, 1);
+---
+
+<Base title={`記事一覧 — ${SITE_TITLE}`} description={SITE_DESCRIPTION} current="articles">
+	<Listing
+		eyebrow="/articles/"
+		meta={`全 ${posts.length} 件`}
+		posts={shown}
+		total={posts.length}
+		current={1}
+		base="/articles/"
+	>
+		<h1 slot="heading">記事一覧</h1>
+	</Listing>
+</Base>

@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import FormattedDate from './FormattedDate.astro';
+import type { Post } from '../utils/posts';
+
+interface Props {
+	post: Post;
+}
+
+const { post } = Astro.props;
+const { title, pubDate, heroImage } = post.data;
+
+// タイルの実寸は約 376px。2x を狙いつつ元画像は超えない。
+const thumbWidth = heroImage ? Math.min(heroImage.width, 760) : 0;
+const thumbHeight = Math.round((thumbWidth * 9) / 16);
+---
+
+<a href={`/${post.id}/`} class="tile">
+	<div class="thumb">
+		{
+			heroImage ? (
+				<Image width={thumbWidth} height={thumbHeight} src={heroImage} alt="" loading="lazy" />
+			) : (
+				<span class="placeholder">{post.id}</span>
+			)
+		}
+	</div>
+	<div class="date"><FormattedDate date={pubDate} /></div>
+	<h3 class="title">{title}</h3>
+</a>
+
+<style>
+	.tile {
+		display: block;
+		text-decoration: none;
+		color: inherit;
+	}
+	.thumb {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		aspect-ratio: 16 / 9;
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		overflow: hidden;
+		background: var(--raised);
+		transition: border-color 0.18s ease;
+	}
+	.thumb :global(img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+	.placeholder {
+		padding: 0 16px;
+		font-family: var(--font-mono);
+		font-size: 14px;
+		color: var(--faint);
+		text-align: center;
+		word-break: break-all;
+	}
+	.date {
+		margin-top: 15px;
+		font-family: var(--font-mono);
+		font-size: 13px;
+		letter-spacing: 0.02em;
+		color: var(--faint);
+	}
+	.title {
+		margin: 5px 0 0 0;
+		font-size: 1.25em;
+		line-height: 1.45;
+		font-weight: 700;
+		letter-spacing: normal;
+		transition: color 0.18s ease;
+	}
+	.tile:hover .title {
+		color: var(--accent);
+	}
+	.tile:hover .thumb {
+		border-color: var(--accent);
+	}
+</style>

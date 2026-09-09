@@ -6,7 +6,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-		site: 'https://techblog.cro-co.co.jp',
+	site: 'https://techblog.cro-co.co.jp',
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
@@ -30,6 +30,15 @@ export default defineConfig({
 					},
 				],
 			},
+		},
+		{
+			// 日付・タグ・ナビなどのメタ情報だけ等幅にする
+			provider: fontProviders.google(),
+			name: 'JetBrains Mono',
+			cssVariable: '--font-mono-face',
+			fallbacks: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+			weights: [400, 500],
+			subsets: ['latin'],
 		},
 	],
 });

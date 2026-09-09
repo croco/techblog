@@ -1,0 +1,30 @@
+---
+import type { ImageMetadata } from 'astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	image?: ImageMetadata;
+	/** 正規 URL を現在のパス以外にしたいとき（page/1 など） */
+	canonical?: string;
+	current?: 'articles' | 'about';
+	activeTag?: string;
+}
+
+const { title, description, image, canonical, current, activeTag } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<BaseHead title={title} description={description} image={image} canonical={canonical} />
+	</head>
+	<body>
+		<Header current={current} activeTag={activeTag} />
+		<slot />
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,30 @@
+---
+import AuthorHeading from '../../../components/AuthorHeading.astro';
+import Listing from '../../../components/Listing.astro';
+import Base from '../../../layouts/Base.astro';
+import { SITE_TITLE } from '../../../consts';
+import { getAuthors, pageSlice } from '../../../utils/posts';
+
+export async function getStaticPaths() {
+	const authors = await getAuthors();
+	return authors.map((a) => ({ params: { author: a.slug }, props: { name: a.name } }));
+}
+
+const { name } = Astro.props;
+const { author } = Astro.params;
+const posts = (await getAuthors()).find((a) => a.slug === author)!.posts;
+const shown = pageSlice(posts, 1);
+---
+
+<Base title={`${name} の記事 — ${SITE_TITLE}`} description={`${name} が書いた記事の一覧。`}>
+	<Listing
+		eyebrow={`/author/${author}/`}
+		meta={`${posts.length} 件`}
+		posts={shown}
+		total={posts.length}
+		current={1}
+		base={`/author/${author}/`}
+	>
+		<AuthorHeading slot="heading" name={name} />
+	</Listing>
+</Base>

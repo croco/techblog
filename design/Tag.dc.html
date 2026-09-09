@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #1c1b19;
+      color: #eae6df;
+      font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+      font-size: 20px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      text-wrap: pretty;
+    }
+    a { color: #d97757; }
+    a:hover { color: #e8916f; }
+    .cursor { animation: blink 1.15s step-end infinite; }
+    @keyframes blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
+    .tile-thumb { transition: border-color .18s ease; }
+    .tile-title { transition: color .18s ease; }
+    .tile:hover .tile-title { color: #d97757; }
+    .tile:hover .tile-thumb { border-color: #d97757; }
+    .navlink { transition: color .18s ease; }
+    .navlink:hover { color: #eae6df; }
+    .chip { transition: border-color .18s ease, color .18s ease; }
+    .chip:hover { border-color: #d97757; color: #d97757; }
+    .more { transition: border-color .18s ease, background .18s ease; }
+    .more:hover { border-color: #d97757; background: #242220; }
+    .page-num { transition: border-color .18s ease, color .18s ease; }
+    .page-num:hover { border-color: #d97757; color: #d97757; }
+    ::selection { background: #d97757; color: #1c1b19; }
+
+  </style>
+</helmet>
+<div style="background: #1c1b19; min-height: 100%;">
+    <header style="position: sticky; top: 0; z-index: 20; background: #1c1b19; border-bottom: 1px solid #35312d;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 32px; max-width: 1248px; margin: 0 auto; padding: 0 24px; height: 68px;">
+        <a href="/" style="display: flex; align-items: center; gap: 0; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 17px; font-weight: 500; letter-spacing: -0.02em; text-decoration: none; color: #eae6df;">
+          <span style="color: #6f6862;">croco</span><span style="color: {{accent}};">/</span><span>techblog</span><span class="cursor" style="display: inline-block; width: 9px; height: 19px; margin-left: 6px; background: {{accent}};"></span>
+        </a>
+        <nav style="display: flex; align-items: center; gap: 26px;">
+          <a href="/articles/" class="navlink" style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 15px; color: #a09890; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid transparent;">記事一覧</a>
+          <a href="/about/" class="navlink" style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 15px; color: #a09890; text-decoration: none; padding-bottom: 3px; border-bottom: 2px solid transparent;">about</a>
+          <a href="/rss.xml" class="navlink" style="display: flex; color: #a09890;" aria-label="RSS">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 11a9 9 0 0 1 9 9" />
+            <path d="M4 4a16 16 0 0 1 16 16" />
+            <circle cx="5" cy="19" r="1.5" />
+          </svg>
+          </a>
+        </nav>
+      </div>
+      <div style="border-top: 1px solid #2a2724;">
+        <div style="display: flex; align-items: center; gap: 14px; max-width: 1248px; margin: 0 auto; padding: 10px 24px;">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.16em; color: #6f6862; flex-shrink: 0;">TAGS</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 7px;">
+            <a href="/tags/ai/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid #35312d; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: #a09890; text-decoration: none;"><span style="color: #6f6862;">#</span>ai</a>
+            <a href="/tags/agent/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid #35312d; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: #a09890; text-decoration: none;"><span style="color: #6f6862;">#</span>agent</a>
+            <a href="/tags/ci/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid #35312d; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: #a09890; text-decoration: none;"><span style="color: #6f6862;">#</span>ci</a>
+            <a href="/tags/aws/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid #35312d; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: #a09890; text-decoration: none;"><span style="color: #6f6862;">#</span>aws</a>
+            <a href="/tags/php/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid {{accent}}; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: {{accent}}; text-decoration: none;"><span style="color: #6f6862;">#</span>php</a>
+            <a href="/tags/astro/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid #35312d; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: #a09890; text-decoration: none;"><span style="color: #6f6862;">#</span>astro</a>
+            <a href="/tags/database/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid #35312d; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: #a09890; text-decoration: none;"><span style="color: #6f6862;">#</span>database</a>
+            <a href="/tags/security/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid #35312d; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: #a09890; text-decoration: none;"><span style="color: #6f6862;">#</span>security</a>
+            <a href="/tags/ops/" class="chip" style="display: inline-block; padding: 2px 9px; border: 1px solid #35312d; border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6; color: #a09890; text-decoration: none;"><span style="color: #6f6862;">#</span>ops</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main style="max-width: 1248px; margin: 0 auto; padding: 0 24px;">
+      <section style="padding: 80px 0 56px 0;">
+        <div style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: 0.06em; color: #6f6862;">/tags/php/</div>
+        <h1 style="margin: 14px 0 0 0; font-size: 49px; line-height: 1.2; font-weight: 700; letter-spacing: -0.02em; color: #eae6df;">
+          <span style="color: {{accent}};">#</span>php
+        </h1>
+        <p style="margin: 14px 0 0 0; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 15px; color: #a09890;">6 件</p>
+      </section>
+      <section>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 36px;">
+          <a href="/php8-three-frameworks/" class="tile" style="display: block; text-decoration: none; color: inherit;">
+            <div class="tile-thumb" style="aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #26231f; border: 1px solid #35312d;">
+              <img src="thumb-4.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: 0.02em; color: #6f6862; margin-top: 15px;">2026.08.28</div>
+            <h3 class="tile-title" style="margin: 5px 0 0 0; font-size: 25px; line-height: 1.45; font-weight: 700; color: #eae6df;">PHP 7.4 から 8.4 へ、フレームワーク3系統をまとめて上げた</h3>
+          </a>
+          <a href="/phalcon5-migration/" class="tile" style="display: block; text-decoration: none; color: inherit;">
+            <div class="tile-thumb" style="aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #26231f; border: 1px solid #35312d;">
+              <img src="thumb-1.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: 0.02em; color: #6f6862; margin-top: 15px;">2026.07.17</div>
+            <h3 class="tile-title" style="margin: 5px 0 0 0; font-size: 25px; line-height: 1.45; font-weight: 700; color: #eae6df;">Phalcon 5 移行で消えた each() と mcrypt の後始末</h3>
+          </a>
+          <a href="/zf1-on-php8/" class="tile" style="display: block; text-decoration: none; color: inherit;">
+            <div class="tile-thumb" style="aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #26231f; border: 1px solid #35312d;">
+              <img src="thumb-2.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: 0.02em; color: #6f6862; margin-top: 15px;">2026.06.26</div>
+            <h3 class="tile-title" style="margin: 5px 0 0 0; font-size: 25px; line-height: 1.45; font-weight: 700; color: #eae6df;">ZendFramework1 のまま PHP 8 に載せ替える</h3>
+          </a>
+          <a href="/buildkit-secret/" class="tile" style="display: block; text-decoration: none; color: inherit;">
+            <div class="tile-thumb" style="aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #26231f; border: 1px solid #35312d;">
+              <img src="thumb-3.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: 0.02em; color: #6f6862; margin-top: 15px;">2026.07.03</div>
+            <h3 class="tile-title" style="margin: 5px 0 0 0; font-size: 25px; line-height: 1.45; font-weight: 700; color: #eae6df;">BuildKit Secret で Dockerfile から認証情報を追い出す</h3>
+          </a>
+          <a href="/behavior-parity/" class="tile" style="display: block; text-decoration: none; color: inherit;">
+            <div class="tile-thumb" style="aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #26231f; border: 1px solid #35312d;">
+              <img src="thumb-5.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: 0.02em; color: #6f6862; margin-top: 15px;">2026.08.14</div>
+            <h3 class="tile-title" style="margin: 5px 0 0 0; font-size: 25px; line-height: 1.45; font-weight: 700; color: #eae6df;">「ふるまいを変えない」を証明するために旧と新を並走させる</h3>
+          </a>
+          <a href="/payment-callback-hmac/" class="tile" style="display: block; text-decoration: none; color: inherit;">
+            <div class="tile-thumb" style="aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #26231f; border: 1px solid #35312d;">
+              <img src="thumb-1.jpg" alt="" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+            </div>
+            <div style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; letter-spacing: 0.02em; color: #6f6862; margin-top: 15px;">2026.06.12</div>
+            <h3 class="tile-title" style="margin: 5px 0 0 0; font-size: 25px; line-height: 1.45; font-weight: 700; color: #eae6df;">AES-GCM と HMAC で決済コールバックを固める</h3>
+          </a>
+        </div>
+      </section>
+    </main>
+    <footer style="border-top: 1px solid #35312d; margin-top: 104px;">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 48px; max-width: 1248px; margin: 0 auto; padding: 52px 24px 64px 24px;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <a href="/" style="display: flex; align-items: center; gap: 0; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 16px; font-weight: 500; letter-spacing: -0.02em; text-decoration: none; color: #eae6df;">
+          <span style="color: #6f6862;">croco</span><span style="color: {{accent}};">/</span><span>techblog</span><span class="cursor" style="display: inline-block; width: 8px; height: 18px; margin-left: 6px; background: {{accent}};"></span>
+        </a>
+          <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #a09890; max-width: 30ch;">各リポジトリのコードとアイデアを、1つずつ記事にしています。</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 24px;">
+          <a href="/articles/" class="navlink" style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; color: #a09890; text-decoration: none;">記事一覧</a>
+          <a href="/about/" class="navlink" style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; color: #a09890; text-decoration: none;">about</a>
+          <a href="/rss.xml" class="navlink" style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; color: #a09890; text-decoration: none;">rss</a>
+          <a href="https://github.com/croco" class="navlink" style="font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; color: #a09890; text-decoration: none;">github</a>
+        </div>
+      </div>
+      <div style="border-top: 1px solid #2a2724;">
+        <div style="max-width: 1248px; margin: 0 auto; padding: 18px 24px; font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: #6f6862;">© 2026 croco</div>
+      </div>
+    </footer>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#d97757","options":["#d97757","#c2903f","#6f9c8f","#9b7bb0"],"section":"Theme"},"$preview":{"width":1440,"height":1560}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#d97757' };
+  }
+}
+</script>
+</body>
+</html>

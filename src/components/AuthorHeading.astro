@@ -1,0 +1,41 @@
+---
+interface Props {
+	name: string;
+}
+
+const { name } = Astro.props;
+const initial = [...name][0] ?? '?';
+---
+
+<div class="who">
+	<span class="avatar" aria-hidden="true">{initial}</span>
+	<h1>{name}</h1>
+</div>
+
+<style>
+	.who {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		margin-top: 14px;
+	}
+	.avatar {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: 64px;
+		height: 64px;
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		background: var(--surface);
+		font-family: var(--font-mono);
+		font-size: 26px;
+		font-weight: 500;
+		color: var(--accent);
+	}
+	.who h1 {
+		margin: 0 !important;
+		line-height: 1.15;
+	}
+</style>
